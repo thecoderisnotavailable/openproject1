@@ -1,0 +1,52 @@
+<!DOCTYPE sets SYSTEM "fields-sets.dtd">
+<!-- 
+    custom schema
+ -->
+<sets>
+    <!-- id structure will be 1.5.1 to access that particular value -->
+    <set id="1" title="Section 1">
+        <field id="101" title="First Name" help="help text 1" placeholder="First Name" type="text" regex="^[AZaz_\s]+$" max="300" empty="false"/>
+        <field id="102" title="field 2" help="help text 2" placeholder="placeholder 2" type="textarea" req="true"/>
+        <field id="103" title="field 3" help="help text 3" placeholder="placeholder 3" type="checkbox"/>
+        <field id="104" title="field 4" help="help text 4" type="options" selected="2">
+            <option data="1">Option 1</option>
+            <option data="2">Option 2</option>
+            <option data="3">Option 9</option>
+            <option data="4">Option 3</option>
+            <option data="5">Option 4</option>
+            <option data="6">Option 5</option>
+            <option data="7">Option 6</option>
+            <option data="8">Option 7</option>
+            <option data="9">Option 8</option>
+        </field>
+        <!-- attaches custom render function to this -->
+        <field id="105" title="field 5" help="help text 4" type="custom" call="function name">
+            <!-- sub fields each calls a function when an action is done on them : below is used only as reference -->
+            <sub id="1" onselect="function name" help="help text 4"/>
+            <sub id="2" onclick="function name"/>
+            <sub id="3" help="help text 3">
+                <option data="1">Option 1</option>
+                <option data="2">Option 2</option>
+            </sub>
+            <!-- many means add row is allowed -->
+            <!-- structure and actions for many is never defined, should be handled in code -->
+            <sub id="4" many="true" call="function name">
+                <field type="text" max="300"></field>
+            </sub>
+        </field>
+        <!-- div will act like a sub section -->
+        <div title="div title 1">
+            <field id="106" title="field 6" help="help text 6" placeholder="placeholder 6" type="file"/>
+            <field id="107" title="field 7" help="help text 7" placeholder="placeholder 7" type="files"/>
+        </div>
+    </set>
+    <set id="2" title="Section 2">
+        <field id="201" title="field 1" help="help text 1" placeholder="placeholder 1" type="text"/>
+        <field id="202" title="field 2" help="help text 2" placeholder="placeholder 2" type="textarea"/>
+        <field id="203" title="field 3" help="help text 3" placeholder="placeholder 3" type="checkbox"/>
+        <field id="204" title="field 4" help="help text 4" type="options" selected="selected value">
+            <option data="1">Option 1</option>
+            <option data="2">Option 2</option>
+        </field>
+    </set>
+</sets>

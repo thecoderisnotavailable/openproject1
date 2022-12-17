@@ -1,0 +1,67 @@
+<div class="container px-6 mx-auto grid">
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Settings
+    </h2>
+    <div class="grid gap-6 mb-8 md:grid-cols-1">
+        <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <h4 class="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                General
+            </h4>
+            <div class="text-gray-600 dark:text-gray-400">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Dark Mode: </span>
+                    <button style="vertical-align: top;" class="rounded-md focus:outline-none focus:shadow-outline-purple" @click="toggleTheme"
+                        aria-label="Toggle color mode">
+                        <template x-if="!dark">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                            </svg>
+                        </template>
+                        <template x-if="dark">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </template>
+                    </button>
+                </label>
+                <label class="block text-sm mt-4">
+                    <span class="text-gray-700 dark:text-gray-400">Profile Picture:</span>
+                    <div class="flex flex-wrap gap-6 button mt-4 cursor-pointer">
+                        <img src="https://avatars.dicebear.com/api/avataaars/fggn.svg?background=%23b49dda" height="60px" width="60px" class="rounded-full"/> <img src="https://avatars.dicebear.com/api/avataaars/:seed.svg?background=%23b49dda" height="60px" width="60px" class="rounded-full"/> <img src="https://avatars.dicebear.com/api/avataaars/ty.svg?background=%23b49dda" height="60px" width="60px" class="rounded-full"/><img src="https://avatars.dicebear.com/api/initials/:seed.svg" height="60px" width="60px" class="rounded-full"/><img src="https://avatars.dicebear.com/api/avataaars/your-custtyom-seed.svg?background=%23b49dda" height="60px" width="60px" class="rounded-full"/>
+                        <img src="https://avatars.dicebear.com/api/avataaars/54-54grgs-bvkn.svg?background=%23b49dda" height="60px" width="60px" class="rounded-full"/>
+                        <img src="https://avatars.dicebear.com/api/avataaars/hhnm%2Cil%3Bpogg54grgs-bvkn.svg?background=%23b49dda" height="60px" width="60px" class="rounded-full"/>
+                        <img src="https://avatars.dicebear.com/api/avataaars/gbm%2Cvl-0rty8tujdjfdhvgsgvbfjbmclbnmiorwwdsfx.svg?background=%23b49dda" height="60px" width="60px" class="rounded-full"/>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <h4 class="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                Security
+            </h4>
+            <div class="text-gray-600 dark:text-gray-400">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Old Password</span>
+                    <input type="password" name="oldPassword" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="********">
+                </label>
+                <label class="block text-sm mt-4">
+                    <span class="text-gray-700 dark:text-gray-400">New Password</span>
+                    <input type="password" name="newPassword" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="********">
+                </label>
+                <label class="block text-sm mt-4">
+                    <span class="text-gray-700 dark:text-gray-400">Old Password</span>
+                    <input type="password" name="confirmNewPassword" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="********">
+                </label>
+                <button onclick="saveButton()" class="px-3 mt-4 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                    Update
+                  </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script tag="init">
+    window.mtab="settings";
+</script>

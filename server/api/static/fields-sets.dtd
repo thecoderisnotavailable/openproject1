@@ -1,0 +1,28 @@
+<!ELEMENT sets (set+)>
+<!ELEMENT set (field+,div?)>
+<!ATTLIST set id NMTOKEN #REQUIRED>
+<!ATTLIST set title CDATA #REQUIRED>
+<!ELEMENT field (option*,sub*)>
+<!ATTLIST field id NMTOKEN #IMPLIED>
+<!ATTLIST field title CDATA #IMPLIED>
+<!ATTLIST field help CDATA #IMPLIED>
+<!ATTLIST field placeholder CDATA #IMPLIED>
+<!ATTLIST field type NMTOKEN #REQUIRED>
+<!ATTLIST field regex CDATA #IMPLIED>
+<!ATTLIST field max NMTOKEN #IMPLIED>
+<!ATTLIST field empty NMTOKEN #IMPLIED>
+<!ATTLIST field req NMTOKEN #IMPLIED>
+<!ATTLIST field selected CDATA #IMPLIED>
+<!ATTLIST field call CDATA #IMPLIED>
+<!ATTLIST field params CDATA #IMPLIED>
+<!ELEMENT option (#PCDATA)>
+<!ATTLIST option data NMTOKEN #REQUIRED>
+<!ELEMENT sub (option*,field?)>
+<!ATTLIST sub id NMTOKEN #REQUIRED>
+<!ATTLIST sub onselect CDATA #IMPLIED>
+<!ATTLIST sub help CDATA #IMPLIED>
+<!ATTLIST sub onclick CDATA #IMPLIED>
+<!ATTLIST sub many NMTOKEN #IMPLIED>
+<!ATTLIST sub call CDATA #IMPLIED>
+<!ELEMENT div (field+)>
+<!ATTLIST div title CDATA #REQUIRED>

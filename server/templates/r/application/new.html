@@ -1,0 +1,174 @@
+<div class="container px-6 mx-auto grid">
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        New Application
+    </h2>
+    <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+    href="https://github.com/estevanmaito/windmill-dashboard">
+        <div class="flex items-center">
+            <span>Start by selecting a user</span>
+        </div>
+        <span>Select &RightArrow;</span>
+    </a>
+    <div class="grid mb-8 dark:text-gray-200">
+        <div x-data="app()" x-on:patch.window="patch">
+            <h1 x-text="headline"></h1>
+          </div>
+    </div>
+    <div class="grid mb-8 dark:text-gray-200">
+        <form x-data="ContactForm()" @submit.prevent="submitForm">
+            <div x-text="formMessage"></div>
+            <div>
+                <label>Name:</label>
+                <input type="text" name="name" required x-model="formData.name" />
+              </div>
+              <div>
+                <label>Email:</label>
+                <input type="email" name="email" required x-model="formData.email" />
+              </div>
+              <div>
+                <label>Message:</label>
+                <textarea name="message" required x-model="formData.message"></textarea>
+              </div>
+            <button :disabled="formLoading" x-text="buttonText"></button>
+        </form>
+    </div>
+    <div class="grid mb-8 dark:text-gray-200">
+        <div class="row" x-data="handler()">
+            <div class="col">
+                <table class="table table-bordered align-items-center table-sm">
+                <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>email</th>
+                    <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="(field, index) in fields" :key="index">
+                    <tr>
+                    <td x-text="index + 1"></td>
+                    <td><input x-model="field.name" type="text" name="name[]" class="form-control"></td>
+                    <td><input x-model="field.email" type="text" name="email[]" class="form-control"></td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-small" @click="removeField(index)">&times;</button>
+                        <button type="button" class="btn btn-primary" @click="saveForm(index)">Save</button>
+                    </td>
+                    </tr>
+                </template>
+                </tbody>
+                <tfoot>
+                    <tr>
+                    <td colspan="4" class="text-right"><button type="button" class="btn btn-info" @click="addNewField()">+ Add Row</button></td>
+                    </tr>
+                </tfoot>
+                </table>
+            </div>
+        </div>   
+    </div>
+</div>
+<script tag="init">
+    window.mtab="applications";
+</script>
+<script tag="reactive">
+    /*
+    * Update with custom value inside alphine
+    */
+    function app(){
+        window.model = {
+            headline: "some initial value",
+            patch(payloadOrEvent){
+            if(payloadOrEvent instanceof CustomEvent){
+                for(const key in payloadOrEvent.detail){
+                this[key] = payloadOrEvent.detail[key];
+                }
+            }else{
+                window.dispatchEvent(new CustomEvent("patch", {
+                    detail: payloadOrEvent
+                }));
+            }
+            }
+        };
+        return window.model;
+    }
+    $(()=>{
+        window.dispatchEvent(new CustomEvent("patch", {
+            detail: {headline : 'headline directly set by event!'}
+        }));
+    });
+    /**
+     * Form Handling 
+     */
+    function ContactForm() {
+        return {
+            formData: {
+            name: "",
+            email: "",
+            message: "",
+            },
+            formMessage: "",
+            formLoading: false,
+            buttonText: "Submit",
+            submitForm() {
+            this.formMessage = "";
+            this.formLoading = false;
+            this.buttonText = "Submitting...";
+            fetch("/", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                },
+                body: JSON.stringify(this.formData),
+            })
+                .then(() => {
+                this.formData.name = "";
+                this.formData.email = "";
+                this.formData.message = "";
+                this.formMessage = "Form successfully submitted.";
+                })
+                .catch(() => {
+                this.formMessage = "Something went wrong.";
+                })
+                .finally(() => {
+                this.formLoading = false;
+                this.buttonText = "Submit";
+                });
+            },
+        };
+    }
+    /**
+     * Dynamic form
+     */
+     function handler() {
+        return {
+            fields: [],
+            addNewField() {
+                this.fields.push({
+                    name: '',
+                    email: ''
+                });
+            },
+            removeField(index) {
+                this.fields.splice(index, 1);
+            },
+            saveForm(index) {
+                alert(index);
+                console.log(this.fields[index]);
+                //You can process your form using fetch() or axios
+                let web_api = '/contact';
+                let response =  fetch(web_api, {
+                    method: "POST",
+                    body: JSON.stringify(this.fields[index]),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    }).then((response) => {
+                    if (!response.ok) {
+                        throw new Error("There was an error processing the request");
+                    }
+                });
+            }
+        }
+    }
+</script>

@@ -1,0 +1,12 @@
+</main>
+</div>
+</div>
+<script tag="menu">
+    if(window.mtab != undefined){
+        const a = document.querySelector('li[data-id=' + mtab + ']');
+        a.insertAdjacentHTML( 'beforeend', '<span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>');
+        a.getElementsByTagName('a')[0].classList.add("dark:text-gray-100");
+    }
+</script>
+</body>
+</html>

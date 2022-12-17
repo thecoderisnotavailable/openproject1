@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NextWiz Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/tailwind.output.css" />
+    <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="/assets/js/init-alpine.js"></script>
+    <script src="/assets/js/focus-trap.js" defer></script>
+    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js" defer></script>
+</head>
+
+<body>
+    <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-white rounded-lg shadow-xl dark:bg-gray-800">
+            <div class="overflow-y-auto">
+                <div class="flex items-center justify-center p-6">
+                    <div class="w-full">
+                        <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
+                            NextWiz Login 
+                        </h1>
+                        <div id="errorMsg" class="flex items-center justify-between p-2 mb-4 text-sm font-semibold text-white bg-red-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-red hidden"
+                            href="/#">
+                            <div class="flex items-center">
+                                <span>Notification Message</span>
+                            </div>
+                        </div>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Email</span>
+                            <input
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                placeholder="Email Address" />
+                        </label>
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Password</span>
+                            <input
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                placeholder="***************" type="password" />
+                        </label>
+
+                        <!-- You should use a button here, as the anchor is only used for the example  -->
+                        <button role="button" onclick="handleSubmit()" class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            Log in
+                        </button>
+
+                        <p class="mt-4">
+                            <a @click="openModal" class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
+                                href="#">
+                                Forgot your password?
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal backdrop. This what you want to place close to the closing body tag -->
+    <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center" style="display:none">
+        <!-- Modal -->
+        <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-150"
+            x-transition:enter-start="opacity-0 transform translate-y-1/2" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0  transform translate-y-1/2" @click.away="closeModal"
+            @keydown.escape="closeModal"
+            class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
+            role="dialog" id="modal">
+            <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
+            <header class="flex justify-end">
+                <button
+                    class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
+                    aria-label="close" @click="closeModal">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
+                        <path
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd" fill-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </header>
+            <!-- Modal body -->
+            <div class="mt-4 mb-6">
+                <!-- Modal title -->
+                <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
+                    Forgot your password?
+                </p>
+                <!-- Modal description -->
+                <p class="text-sm text-gray-700 dark:text-gray-400">
+                    Ask your referer to reset your password.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- End of modal backdrop -->
+    <script type="module">
+        import zlFetch from 'https://cdn.jsdelivr.net/npm/zl-fetch@4.0.1/src/index.js';
+        let $ = window;
+        const getID = id => document.getElementById(id);
+        $.handleSubmit = function (e) {
+            NProgress.start();
+            getID("errorMsg").style.display = "none";
+            zlFetch.get("/api/account/login")
+                .then(res => {
+                    res = JSON.parse(res.body)
+                    if(res.a.e == 0){
+                        window.location="/auth/checkpoint";
+                    } else {
+                        getID("errorMsg").innerText = res.a.m; 
+                        getID("errorMsg").style.display = "none"; 
+                    }
+                })
+                .catch(e => console.log(e))
+                .finally(()=>{ NProgress.done(); });
+        }
+    </script>
+</body>
+
+</html>
